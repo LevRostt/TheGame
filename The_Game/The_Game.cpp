@@ -1,6 +1,16 @@
 ﻿#include <iostream>
+#include "gameStart.h"
+using namespace std;
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+    setlocale(0, "");
+    theGameStart();
+    bool outOfGame = false;
+    while (!outOfGame) {
+        system("cls");
+        outOfGame = gotoTheMenu();
+    }
 }
