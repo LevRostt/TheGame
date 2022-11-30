@@ -53,19 +53,21 @@ void theGameStart()
 		}
 }
 
+
+
 bool gotoTheMenu() // Рисуем меню и выбираем что нам делать дальше
 {
-	bool insideMenu = true;
-	string newGame = "<newGame>";
-	string score = "scoreRating";
-	string help = "help";
+	bool outOfMenu = false;
+	string newGame = "New Game";
+	string score = "Score Rating";
+	string help = "Help";
 	string exitFromGame = "exit";
 	int posChose = 0; //Позиция курсора выбора < >
-	while (insideMenu) {
+	while (!outOfMenu) {
 		system("cls");
 
 
-		if (_kbhit) {
+		if (_kbhit()) {
 			switch (_getch())
 			{
 			case 72: // Если стрелка вверх - уменьшаем
@@ -80,12 +82,110 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам делать дальше
 					posChose = 0;
 				}
 				break;
+			case 13:
+				switch (posChose)
+				{
+				case 0:
+					return false; // Стартует игру 
+					break;
+				case 1:
+					scoreRating(); // Вызывает таблицу лидеров
+					break;
+				case 2:
+					gameHelp(); // Вызывает меню помощи
+					break;
+				case 3:
+					return true; // Возвращает true и заканчивает игру
+					break;
+				}
+				break;
 			}
 		}
+		
+		// Это должна была быть красивая реализация кнопок, но из-за ограниченности системы от этого лучше, да и вообщем пришлось отказаться.
+		// Слишком частое обновление вывода в консоли не позволяет адекватно воспринимать происходящее.
 
-		for (int i = 0; i < 20; i++) { // Рисуем меню "по умолчанию"
+		//newGame = "New Game";
+		//score = "Score Rating";
+		//help = "Help";
+		//exitFromGame = "exit";
+
+		//for (int i = 0; i < 20; i++) { // Рисуем меню "по умолчанию"
+		//	for (int j = 0; j < 100; j++) {
+		//		
+		//		if (i == 10 and j >= (100 / 2 - newGame.length() / 2) and j <= (100 / 2 + newGame.length() / 2)) { // формула обозначает следующее:
+		//			cout << newGame[j - (100 / 2 - newGame.length() / 2)];									// длина всего вывода/2 - половина слова 
+		//		}																						// Позваляет выводить слова идеально посередине
+		//																							// короче просто визуально красиво.
+		//		else if (i == 12 and j >= (100 / 2 - score.length() / 2) and j <= (100 / 2 + score.length() / 2)) {
+		//			cout << score[j - (100 / 2 - score.length() / 2)];
+		//		}
+
+
+		//		else if (i == 14 and j >= (100 / 2 - help.length() / 2) and j <= (100 / 2 + help.length() / 2)) {
+		//			cout << help[j - (100 / 2 - help.length() / 2)];
+		//		}
+
+		//		else if (i == 16 and j >= (100 / 2 - exitFromGame.length() / 2) and j <= (100 / 2 + exitFromGame.length() / 2)) {
+		//			cout << exitFromGame[j - (100 / 2 - exitFromGame.length() / 2)];
+		//		}
+
+		//		else
+		//			cout << " ";
+		//	}
+		//	cout << endl;
+		//}
+
+		//system("cls");
+		 
+		
+		//string newGame = "New Game";
+		//string score = "Score Rating";
+		//string help = "Help";
+		//string exitFromGame = "exit";
+
+
+		// рисуем в зависимости от выбранного.  #Реализация отменена# Такая сложная реализация чтобы красиво реализовать мигание выбранной строки.
+
+
+		switch (posChose)
+		{
+		case 0:
+			newGame = "<- New Game ->";
+			exitFromGame = "exit";
+			score = "Score Rating";
+			help = "Help";
+			break;
+		case 1:
+			newGame = "New Game";
+			score = "<- Score Rating ->";
+			help = "Help";
+			exitFromGame = "exit";
+			break;
+		case 2:
+			newGame = "New Game";
+			score = "Score Rating";
+			help = "<- Help ->";
+			exitFromGame = "exit";
+			break;
+		case 3:
+			newGame = "New Game";
+			score = "Score Rating";
+			help = "Help";
+			exitFromGame = "<- exit ->";
+			break;
+		}
+
+		string menu = "<|  PockeFightGame  |>";
+
+		for (int i = 0; i < 18; i++) { // Снова рисуем меню только с изменёнными параметрами. Да, это копипаст. И что?)
 			for (int j = 0; j < 100; j++) {
-				
+
+				if (i == 4 and j >= (85 / 2 - menu.length() / 2) and j <= (85 / 2 + menu.length() / 2)) {
+					cout << menu[j - (85 / 2 - menu.length() / 2)];
+				}
+
+
 				if (i == 10 and j >= (100 / 2 - newGame.length() / 2) and j <= (100 / 2 + newGame.length() / 2)) { // формула обозначает следующее:
 					cout << newGame[j - (100 / 2 - newGame.length() / 2)];									// длина всего вывода/2 - половина слова 
 				}																						// Позваляет выводить слова идеально посередине
@@ -109,15 +209,36 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам делать дальше
 			cout << endl;
 		}
 
-		Sleep(10000);
+		Sleep(150);
+
+		
+		
+
+	}
+
+	return false;
+}
 
 
-		// рисуем в зависимости от выбранного. Такая сложная реализация чтобы красиво реализовать мигание выбранной строки.
-		switch (posChose)
-		{
-		default:
-			break;
+
+void gameHelp() {
+	bool outOfHelp = false;
+
+
+
+	while (!outOfHelp) { // Выход из меню помощи при вводе Esc;
+		if(_kbhit()){
+			switch (_getch())
+			{
+			case 27:
+				outOfHelp = true;
+				break;
+			}
 		}
 	}
-	return false;
+
+}
+
+void scoreRating() { // Тут будет реализация топа лидеров
+	
 }

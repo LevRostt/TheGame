@@ -10,7 +10,10 @@ int main()
     theGameStart();
     bool outOfGame = false;
     while (!outOfGame) {
-        system("cls");
+        //system("cls");
         outOfGame = gotoTheMenu();
+
     }
+    cout << "End of Game! Thanks for playing!";
+    return 0;
 }
