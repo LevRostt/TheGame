@@ -1,5 +1,10 @@
 ﻿  gameSystem.cpp
 D:\Code\C++\The_Game\The_Game\gameSystem.cpp(400,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-D:\Code\C++\The_Game\The_Game\gameSystem.cpp(458,16): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-D:\Code\C++\The_Game\The_Game\gameSystem.cpp(499,14): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(414,35): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(495,16): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(508,27): warning C4244: -=: преобразование "double" в "int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(517,21): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(626,14): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(648,55): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+D:\Code\C++\The_Game\The_Game\gameSystem.cpp(662,55): warning C4244: =: преобразование "double" в "int", возможна потеря данных
   The_Game.vcxproj -> D:\Code\C++\The_Game\x64\Debug\The_Game.exe
