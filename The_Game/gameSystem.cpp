@@ -166,7 +166,7 @@ string PersonName() {// Ввод имени игрока.
 
 	cin >> namePerson;
 
-	return namePerson;
+	return namePerson.substr(0, 64);
 }
 
 
@@ -726,11 +726,13 @@ void drawEndOfGame() {
 void saveResScreen(int personClass, int lvl, string name) {
 
 	system("cls");
-	string save = "<- Save ->";
+	string save = "<- Save Data ->";
 	string exitOut = "Exit with out save";
 
 	int choosePos = 0;
 	int selected = 0;
+
+	cout << "И что мы будем делать?" << endl;
 
 	for (int i = 0; i < 10; i++) {
 
@@ -800,15 +802,17 @@ void saveResScreen(int personClass, int lvl, string name) {
 			}
 
 			if (choosePos == 0) {
-				save = "<- Save ->";
+				save = "<- Save Data ->";
 				exitOut = "Exit with out save";
 			}
 			if (choosePos == 1) {
-				save = "Save";
+				save = "Save Data";
 				exitOut = "<- Exit with out save ->";
 			}
 
 			system("cls");
+			
+			cout << "И что мы будем делать?" << endl;
 
 			for (int i = 0; i < 10; i++) {
 
@@ -866,12 +870,12 @@ void saveResScreen(int personClass, int lvl, string name) {
 
 		if (personClass == 1) {
 
-			data << "Воин " << nameToSave << " " << lvl;
+			data << "Воин - " << nameToSave << " - " << lvl;
 
 		}
 		else {
 
-			data << "Ведьмак " << nameToSave << " " << lvl;
+			data << "Ведьмак - " << nameToSave << " - " << lvl;
 
 		}
 		data << endl;

@@ -1,5 +1,6 @@
 ﻿#include "gameStart.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <Windows.h>
 #include <conio.h>
@@ -110,23 +111,149 @@ void gameHelp() {
 
 }
 
-//void scoreRating() { // Тут будет реализация топа лидеров
-//
-//	ifstream data;
-//	data.open("System/data.txt");
-//
-//	boolean out = false;
-//	while (!out) {
-//
-//		if (_kbhit()) {
-//
-//			out = true;
-//
-//		}
-//
-//	}
-//
-//}
+void scoreRating() { // Тут будет реализация топа лидеров
+
+	system("cls");
+
+	ifstream data;
+	data.open("System/data.txt");
+	
+	string s;
+	int count = 0;
+
+	while (getline(data, s)) {
+
+		count++;
+
+	}
+
+	data.close();
+	data.open("System/data.txt"); // Переоткрываю файл, чтобы сдвинуть курсор в начало
+
+	string* listWithNames = new string[count];
+
+	int i = 0;
+
+	int maxLvl = 0;
+
+	while (getline(data, s)) {
+
+		listWithNames[i] = s;
+		i++;
+
+		int spaces = 0;
+		string localLvl = "";
+		for (int j = 0; j < s.length(); j++) { // Получаем уровень персонажа
+
+			if (spaces == 2) {
+
+				if (s[j] != ' ') {
+					localLvl += s[j];
+				}
+
+			}
+
+			if (s[j] == '-')
+				spaces++;
+
+		}
+
+		if (maxLvl < (stoi(localLvl))) {
+			maxLvl = stoi(localLvl);
+		}
+
+	}
+
+	data.close();
+
+	string outPutText = "Топ игроков продвинувшихся дальше всего";
+	for (int outPut = 0; outPut < 80; outPut++) {
+
+		if (outPut >= 100 / 2 - outPutText.length() / 2 and outPut <= 100 / 2 + outPutText.length() / 2) {
+
+			cout << outPutText[outPut - (100 / 2 - outPutText.length()/2)];
+
+		}
+
+		else
+			cout << " ";
+
+	}
+
+	cout << endl;
+
+	outPutText = "Класс - Имя - Уровень";
+	for (int outPut = 0; outPut < 100; outPut++) {
+
+		if (outPut >= 100 / 2 - outPutText.length() / 2 and outPut <= 100 / 2 + outPutText.length() / 2) {
+
+			cout << outPutText[outPut - (100 / 2 - outPutText.length()/2)];
+
+		}
+
+		else
+			cout << " ";
+
+	}
+
+	cout << endl << endl;
+
+	for (i = maxLvl; i >= 0; i--) {
+
+		for (int index = 0; index < count; index++) {
+
+			int spaces = 0;
+			string localLvl = "";
+			for (int j = 0; j < listWithNames[index].length(); j++) { // Получаем уровень персонажа 
+												// Копи - паст примера выше
+				if (spaces == 2) {
+
+					if (listWithNames[index][j] != ' ') {
+						localLvl += listWithNames[index][j];
+					}
+
+				}
+
+				if (listWithNames[index][j] == '-')
+					spaces++;
+
+			}
+
+			if (stoi(localLvl) == i) {
+
+				for (int inside = 0; inside < 100; inside++) {
+
+					if (inside >= 100 / 2 - listWithNames[index].length() / 2 and inside <= 100 / 2 + listWithNames[index].length() / 2) {
+						cout << listWithNames[index][inside - (100 / 2 - listWithNames[index].length()/2)];
+					}
+					else
+						cout << " ";
+				
+				}
+
+				cout << endl;
+
+			}
+
+		}
+
+	}
+
+
+
+
+	boolean out = false;
+	while (!out) {
+
+		if (_kbhit()) {
+
+			out = true;
+
+		}
+
+	}
+
+}
 
 
 bool gotoTheMenu() // Рисуем меню и выбираем что нам делать дальше
