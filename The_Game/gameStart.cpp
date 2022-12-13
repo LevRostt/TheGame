@@ -73,11 +73,11 @@ void drawable(string newGame, string score, string help, string exitFromGame) { 
 			}
 
 
-			else if (i == 14 and j >= (100 / 2 - help.length() / 2) and j <= (100 / 2 + help.length() / 2)) {
-				cout << help[j - (100 / 2 - help.length() / 2)];
-			}
+			//else if (i == 14 and j >= (100 / 2 - help.length() / 2) and j <= (100 / 2 + help.length() / 2)) {
+			//	cout << help[j - (100 / 2 - help.length() / 2)];
+			//}
 
-			else if (i == 16 and j >= (100 / 2 - exitFromGame.length() / 2) and j <= (100 / 2 + exitFromGame.length() / 2)) {
+			else if (i == 14 and j >= (100 / 2 - exitFromGame.length() / 2) and j <= (100 / 2 + exitFromGame.length() / 2)) {
 				cout << exitFromGame[j - (100 / 2 - exitFromGame.length() / 2)];
 			}
 
@@ -87,6 +87,46 @@ void drawable(string newGame, string score, string help, string exitFromGame) { 
 		cout << endl;
 	}
 }
+
+
+
+
+
+void gameHelp() {
+	bool outOfHelp = false;
+
+
+
+	while (!outOfHelp) { // Выход из меню помощи при вводе Esc;
+		if (_kbhit()) {
+			switch (_getch())
+			{
+			case 27:
+				outOfHelp = true;
+				break;
+			}
+		}
+	}
+
+}
+
+//void scoreRating() { // Тут будет реализация топа лидеров
+//
+//	ifstream data;
+//	data.open("System/data.txt");
+//
+//	boolean out = false;
+//	while (!out) {
+//
+//		if (_kbhit()) {
+//
+//			out = true;
+//
+//		}
+//
+//	}
+//
+//}
 
 
 bool gotoTheMenu() // Рисуем меню и выбираем что нам делать дальше
@@ -110,12 +150,12 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам д
 			case 72: // Если стрелка вверх - уменьшаем
 				posChose--;
 				if (posChose < 0) {
-					posChose = 3;
+					posChose = 2;
 				}
 				break;
 			case 80: // Если стрелка вниз - увеличиваем
 				posChose++;
-				if (posChose > 3) {
+				if (posChose > 2) {
 					posChose = 0;
 				}
 				break;
@@ -128,10 +168,10 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам д
 				case 1:
 					scoreRating(); // Вызывает таблицу лидеров
 					break;
+				//case 2:
+				//	gameHelp(); // Вызывает меню помощи
+				//	break;
 				case 2:
-					gameHelp(); // Вызывает меню помощи
-					break;
-				case 3:
 					return true; // Возвращает true и заканчивает игру
 					break;
 				}
@@ -147,24 +187,24 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам д
 				newGame = "<- New Game ->";
 				exitFromGame = "exit";
 				score = "Score Rating";
-				help = "Help";
+//				help = "Help";
 				break;
 			case 1:
 				newGame = "New Game";
 				score = "<- Score Rating ->";
-				help = "Help";
+//				help = "Help";
 				exitFromGame = "exit";
 				break;
+//			case 2:
+//				newGame = "New Game";
+//				score = "Score Rating";
+//				help = "<- Help ->";
+//				exitFromGame = "exit";
+//				break;
 			case 2:
 				newGame = "New Game";
 				score = "Score Rating";
-				help = "<- Help ->";
-				exitFromGame = "exit";
-				break;
-			case 3:
-				newGame = "New Game";
-				score = "Score Rating";
-				help = "Help";
+//				help = "Help";
 				exitFromGame = "<- exit ->";
 				break;
 			}
@@ -220,28 +260,4 @@ bool gotoTheMenu() // Рисуем меню и выбираем что нам д
 	}
 
 	return false;
-}
-
-
-
-void gameHelp() {
-	bool outOfHelp = false;
-
-
-
-	while (!outOfHelp) { // Выход из меню помощи при вводе Esc;
-		if(_kbhit()){
-			switch (_getch())
-			{
-			case 27:
-				outOfHelp = true;
-				break;
-			}
-		}
-	}
-
-}
-
-void scoreRating() { // Тут будет реализация топа лидеров
-	
 }

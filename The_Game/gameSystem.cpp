@@ -87,7 +87,7 @@ int setPersonClassMenu() { // Логика в меню выбора персон
 	system("cls");
 
 	string warrior = "<- Воин ->";
-	string witcher = "Маг";
+	string witcher = "Ведьмак";
 	menuOfChoise(warrior, witcher);
 	int pos = 0;
 
@@ -117,11 +117,11 @@ int setPersonClassMenu() { // Логика в меню выбора персон
 
 			if (pos == 0) {
 				warrior = "<- Воин ->";
-				witcher = "Маг";
+				witcher = "Ведьмак";
 			}
 			else {
 				warrior = "Воин";
-				witcher = "<- Маг ->";
+				witcher = "<- Ведьмак ->";
 			}
 
 			menuOfChoise(warrior, witcher); 
@@ -134,18 +134,18 @@ int setPersonClassMenu() { // Логика в меню выбора персон
 }
 
 
-string PersonName() {// Ввод имени игрока. По хорошему необходимо реализовать отхватку ошибок и смотреть, когда игрок ввёл хреновое имя.
+string PersonName() {// Ввод имени игрока. 
 
 	system("cls");
 	
-	string toOut = "Введите имя"; 
+	string toOut = "Введите имя персонажа, состоящее только из латинских букв, цифр или '_'. Имя будет считано до первого пробела"; 
 
 	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 100; j++) {
+		for (int j = 0; j < 120; j++) {
 
-			if (i == 3 and j >= (100 / 2 - toOut.length()/2) and j <= (100 / 2 + toOut.length()/2)) {
-				cout << toOut[j - (100 / 2 - toOut.length()/2)];
-				Sleep(50);
+			if (i == 3 and j >= (120 / 2 - toOut.length()/2) and j <= (120 / 2 + toOut.length()/2)) {
+				cout << toOut[j - (120 / 2 - toOut.length()/2)];
+				Sleep(20);
 			} 
 			
 			else if (i == 4 and j == 50) {
@@ -395,7 +395,7 @@ void drawFightScene(int hp, int lvl, int hpEnemy, int choose, int way, int atc) 
 }
 	
 
-int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Основная логика меню сражения 
+int FightScene(int hpInput, int& lvl, int PersonClass, int inventory[]) { // Основная логика меню сражения 
 
 	srand(time(0));
 
@@ -424,6 +424,8 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 	int block = 0; // Коэфицент блокирования удара
 
 	int cast = 0; // Счётчик каста. Если не ноль, то тогда у нас активирована способность.
+
+	int hp = hpInput;
 
 	int coolDownTimer = 0;
 
@@ -476,18 +478,18 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 					break;
 
 				case 'A': //Чит код - килл
-					hp = 0;
+					hp = 1;
 					break;
 
-				case 'D': // Чит код - уббить противника
-					hpEnemy = 0;
+				case 'D': // Чит код - убить противника
+					hpEnemy = 1;
 					break;
 
 				case '-':
-					hp -= 100;
+					hp -= 99;
 					break;
 				case '/':
-					hp = hp + 100;
+					hp = hp + 99;
 					break;
 
 				case 13: // Если нажали Enter то нужно что-то сделать
@@ -551,16 +553,16 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 
 
 						if (PersonClass == 1) { // Для воина
-							if (hp <= (lvl + 1) * 40 * 2 and coolDownTimer == 0) {
+							if (hp <= ((lvl + 1) * 50) + 100 and coolDownTimer == 0) {
 								coolDownTimer = 10;
 								cast = 6;
 								cout << "Вы используете свою особую способность." << endl;
-								cout << "Второе дыхание. Каждый следующий нанесённый вами удар будет на 5% больше предыдущего следующие 5 ходов." << endl;
+								cout << "Второе дыхание. Каждый следующий нанесённый вами удар будет на 10% больше базового следующие 5 ходов." << endl;
 								cout << " + При каждом ударе вы получаете блок первого уровня";
 							}
 
 							else if (coolDownTimer == 0) {
-								cout << " Вы расстелялись. В вас недостаточно ярости, чтобы использовать способность. (Для вызова способности нужно hp <= 40%)";
+								cout << " Вы расстелялись. В вас недостаточно ярости, чтобы использовать способность. (Для вызова способности нужно hp <= 50%)";
 							}
 							else {
 								cout << " Вы не расчитали силы. Вы уже использовали способность, вам нужно дождаться нового заряда (" << coolDownTimer << " ходов)";
@@ -569,16 +571,16 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 
 						if (PersonClass == 2) {
 
-							if (hp <= (lvl + 1) * 40 and coolDownTimer == 0) {
+							if (hp <= (lvl + 1) * 50 and coolDownTimer == 0) {
 								coolDownTimer = 10;
 								cast = 6;
 								cout << "Вы используете свою особую способность." << endl;
-								cout << "Второе дыхание. Каждый следующий нанесённый вами удар будет на 5% больше предыдущего следующие 5 ходов." << endl;
+								cout << "Вампиризм. Следующие 5 ходов вы высасываете жизненные силы из врага пропорциально нанесённому урону(10%) " << endl;
 								cout << " + При каждом ударе вы получаете блок первого уровня";
 							}
 
 							else if (coolDownTimer == 0) {
-								cout << " Вы расстелялись. Вы недостаточно накопили маны, чтобы использовать способность. (Для вызова способности нужно hp <= 40%)";
+								cout << " Вы расстелялись. Вы недостаточно накопили маны, чтобы использовать способность. (Для вызова способности нужно hp <= 50%)";
 							}
 							else {
 								cout << " Вы не расчитали силы. Вы уже использовали способность, вам нужно дождаться нового заряда (" << coolDownTimer << " ходов)";
@@ -595,7 +597,7 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 					}
 
 					way = 0;
-					Sleep(2500);
+					Sleep(3500);
 
 					if (cast > 0) { // Один ход пользователя прошёл
 						cast--;
@@ -671,7 +673,11 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 
 			}
 
-			Sleep(2500);
+			if (hpEnemy < 0 or hp < 0) { // Выпадаем из программы, если чьё-либо hp меньше 0
+				break;
+			}
+
+			Sleep(3500);
 
 			block = 0; // Обнуляем блок пользователя
 
@@ -684,13 +690,208 @@ int FightScene(int hp, int& lvl, int PersonClass, int inventory[]) { // Осно
 	return hp;
 }
 
+void drawEndOfGame() {
+
+	system("cls");
+
+	string dead = "YOU DIED...";
+
+	for (int i = 0; i < 10; i++) {
+
+		if (i == 7) {
+
+			for (int j = 0; j < 100; j++) {
+				
+				if (j >= 100 / 2 - dead.length() / 2 and j <= 100 / 2 + dead.length() / 2) {
+
+					cout << dead[j - (100 / 2 - dead.length()/2)];
+					Sleep(300);
+
+				}
+
+				else
+					cout << " ";
+
+			}
+
+		}
+
+		else {
+			cout << endl;
+		}
+	}
+
+}
+
+void saveResScreen(int personClass, int lvl, string name) {
+
+	system("cls");
+	string save = "<- Save ->";
+	string exitOut = "Exit with out save";
+
+	int choosePos = 0;
+	int selected = 0;
+
+	for (int i = 0; i < 10; i++) {
+
+		if (i == 4) {
+
+			for (int j = 0; j < 100; j++) {
+
+				if (j >= 80 / 4 - save.length() / 2 and j <= 80 / 4 + save.length() / 2) {
+
+					cout << save[j - (80 / 4 - save.length() / 2)];
+
+				}
+				else if (j >= (60 - exitOut.length() / 2) and j <= (60 + exitOut.length() / 2)) {
+
+					cout << exitOut[j - (60 - exitOut.length() / 2)];
+
+				}
+				else {
+
+					cout << " ";
+
+				}
+			}
+
+		}
+
+		else {
+			cout << endl;
+		}
+	}
+
+	while (selected == 0) {
+
+
+		if (_kbhit()) {
+
+			switch (_getch())
+			{
+			case 77:
+				choosePos++;
+				break;
+
+			case 75:
+				choosePos--;
+				break;
+
+			case 13:
+				if (choosePos == 0) {
+
+					selected = 1;
+
+				}
+				if (choosePos == 1) {
+
+					selected = 2;
+
+				}
+				break;
+
+			}
+
+			if (choosePos > 1) {
+				choosePos = 0;
+			}
+			else if (choosePos < 0) {
+				choosePos = 1;
+			}
+
+			if (choosePos == 0) {
+				save = "<- Save ->";
+				exitOut = "Exit with out save";
+			}
+			if (choosePos == 1) {
+				save = "Save";
+				exitOut = "<- Exit with out save ->";
+			}
+
+			system("cls");
+
+			for (int i = 0; i < 10; i++) {
+
+				if (i == 4) {
+
+					for (int j = 0; j < 100; j++) {
+
+						if (j >= 80 / 4 - save.length() / 2 and j <= 80 / 4 + save.length() / 2) {
+
+							cout << save[j - (80 / 4 - save.length() / 2)];
+
+						}
+						else if (j >= (60 - exitOut.length() / 2) and j <= (60 + exitOut.length() / 2)) {
+
+							cout << exitOut[j - (60 - exitOut.length() / 2)];
+
+						}
+						else {
+
+							cout << " ";
+
+						}
+					}
+
+				}
+
+				else {
+					cout << endl;
+				}
+			}
+
+		}
+
+	}
+
+
+
+	if (selected == 1) {
+
+		ofstream data;
+		data.open("System/data.txt", ios::app);
+
+		string nameToSave;
+
+		for (int i = 0; i < name.length(); i++) {
+
+			if (name[i] == '_' or (name[i] >= 65 and name[i] <= 90) or (name[i] >= 97 and name[i] <= 122) //Проверка на символы в нике
+				or (name[i] >= 48 and name[i] <= 57)) {
+
+				nameToSave += name[i];
+
+			}
+
+		}
+
+		if (personClass == 1) {
+
+			data << "Воин " << nameToSave << " " << lvl;
+
+		}
+		else {
+
+			data << "Ведьмак " << nameToSave << " " << lvl;
+
+		}
+		data << endl;
+
+		data.close();
+
+		cout << endl << "All your data saved";
+		Sleep(1500);
+
+	}
+
+}
+
 bool gameSystem() // Логика меню "Новая игра"
 {
 	setlocale(0, "");
 
 	string name = PersonName();
 
-	int personClass = setPersonClassMenu(); // Получаем класс персонажа 1 - Воин. 2 - волшебник
+	int personClass = setPersonClassMenu(); // Получаем класс персонажа 1 - Воин. 2 - Ведьмак
 
 	LoreOfGame(); //Показ вступительного Лора игры
 
@@ -706,7 +907,7 @@ bool gameSystem() // Логика меню "Новая игра"
 
 	int lvl = 0;
 
-	while (hp != 0) { // Пока персонаж жив повторять эти действия
+	while (hp > 0) { // Пока персонаж жив повторять эти действия
 
 
 
@@ -715,14 +916,18 @@ bool gameSystem() // Логика меню "Новая игра"
 		hp = FightScene(hp, lvl, personClass, inventory);
 
 
-		if (hp == 0) {
+		if (hp < 0) {
+
+			drawEndOfGame();
+			saveResScreen(personClass, lvl, name);
 			break;
+		
 		}
 		else {
 
 			lvl++;
 			hp += 100;
-
+			
 		}
 
 		// Рандомить действие или в данж или гибкий многоходовочный файт с мобами.

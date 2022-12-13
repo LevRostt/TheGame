@@ -16,6 +16,7 @@ int main()
             outOfGame = gameSystem();
         
     }
+    system("cls");
     cout << "End of Game! Thanks for playing!";
     return 0;
 }
